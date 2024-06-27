@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://bu22emgrfgnbi"]
+
+[ext_resource type="Script" path="res://main.cs" id="1_2hyui"]
+[ext_resource type="PackedScene" uid="uid://cj0sr3dxl1455" path="res://bullet.tscn" id="2_e15n2"]
+[ext_resource type="PackedScene" uid="uid://dmu5ymplmmskx" path="res://map_generator.tscn" id="2_f2l7v"]
+[ext_resource type="PackedScene" uid="uid://c0nu6b43ce1wy" path="res://player.tscn" id="3_gy2rp"]
+[ext_resource type="Texture2D" uid="uid://bdpfellmwtr6s" path="res://assets/Sky_Day_BlueSky_Nothing_Cam_1_Back-Z.png" id="4_bg1eb"]
+[ext_resource type="Texture2D" uid="uid://km8xb0vfu4ce" path="res://assets/Clouds.png" id="6_h8efi"]
+[ext_resource type="Texture2D" uid="uid://ckhts35qiqwnc" path="res://assets/Arrow.png" id="7_2nyx4"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_2hyui")
+camYBoundary = -2000.0
+Bullets = ExtResource("2_e15n2")
+
+[node name="View" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="View"]
+
+[node name="Player" parent="." instance=ExtResource("3_gy2rp")]
+
+[node name="MapGenerator" parent="." instance=ExtResource("2_f2l7v")]
+position = Vector2(-600, 10)
+map_size = 10
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="SkyDayBlueSkyNothingCam1Back-z" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(574, 325)
+scale = Vector2(2, 1)
+texture = ExtResource("4_bg1eb")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(419, 469)
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(2000, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("6_h8efi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 300)
+texture = ExtResource("7_2nyx4")
+
+[connection signal="CreateProjectile" from="Player" to="." method="_on_player_create_projectile"]

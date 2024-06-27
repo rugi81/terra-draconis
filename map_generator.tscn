@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmu5ymplmmskx"]
+
+[ext_resource type="Script" path="res://MapGenerator.cs" id="1_fjhea"]
+[ext_resource type="PackedScene" uid="uid://dt1iocjaiixmw" path="res://terrain.tscn" id="2_fn3p3"]
+[ext_resource type="PackedScene" uid="uid://cim7xdxrxc3k2" path="res://liquid.tscn" id="3_cic68"]
+[ext_resource type="PackedScene" uid="uid://cevsj5v5pxtkm" path="res://debris.tscn" id="4_w2f8x"]
+
+[node name="MapGenerator" type="Node2D"]
+script = ExtResource("1_fjhea")
+TerrainScene = ExtResource("2_fn3p3")
+LiquidScene = ExtResource("3_cic68")
+map_types = PackedStringArray("flat", "rocky", "hill", "mountain_incline")
+Debriss = ExtResource("4_w2f8x")

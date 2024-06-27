@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cim7xdxrxc3k2"]
+
+[ext_resource type="Script" path="res://liquid.cs" id="1_3wlek"]
+
+[node name="Liquid" type="Area2D" groups=["liquid"]]
+collision_mask = 15
+gravity_space_override = 4
+gravity_point_center = Vector2(0, -1.5)
+gravity_direction = Vector2(0, -1.5)
+linear_damp_space_override = 4
+linear_damp = 5.0
+script = ExtResource("1_3wlek")
+waterDepth = 200.0
+
+[node name="Shape" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 700)
+polygon = PackedVector2Array(10, 161, 444, 156, 452, 266, 13, 249, 13, 249)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, 700)
+color = Color(0, 0.54902, 0.909804, 0.6)
+polygon = PackedVector2Array(10, 160, 443, 157, 452, 265, 13, 248)
+
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]

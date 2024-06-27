@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt1iocjaiixmw"]
+
+[ext_resource type="Script" path="res://Terrain.cs" id="1_7sael"]
+[ext_resource type="Texture2D" uid="uid://crdxndt1mtl12" path="res://assets/Ground.png" id="2_d3lja"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jy5gu"]
+rough = true
+absorbent = true
+
+[node name="Terrain" type="Node2D" groups=["terrain"]]
+script = ExtResource("1_7sael")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_jy5gu")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+texture_repeat = 2
+position = Vector2(0, 500)
+texture = ExtResource("2_d3lja")
+texture_scale = Vector2(2, 2)
+polygon = PackedVector2Array(0, -93, 333, -42, 272, 88, 102, 90)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(0, 500)
+polygon = PackedVector2Array(0, 0, 0, 1, 2, 2)

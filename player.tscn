@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0nu6b43ce1wy"]
+
+[ext_resource type="Texture2D" uid="uid://37lm27va1xfx" path="res://assets/AlienSpaceship.png" id="1_od8hv"]
+[ext_resource type="Script" path="res://player.cs" id="1_t0b4n"]
+[ext_resource type="Texture2D" uid="uid://4ofmpitiy3ol" path="res://assets/Fireball.png" id="2_0lduw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_baa2g"]
+radius = 7.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8e1n"]
+atlas = ExtResource("2_0lduw")
+region = Rect2(0, 0, 16, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjuxv"]
+atlas = ExtResource("2_0lduw")
+region = Rect2(16, 0, 16, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cx4kb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8e1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjuxv")
+}],
+"loop": true,
+"name": &"boost",
+"speed": 5.0
+}]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0r2fl"]
+polygon = PackedVector2Array(5.5, -6.9, 5.5, -5.4, 11.5, 0.6, 11.5, 6, 7.7, 6, -2.5, 8, -3.5, 8, -3.5, 6.9, -11.5, 5.9, -11.5, 0.6, -5, -7, -3.5, -7, -3.5, -8, -2.1, -8)
+
+[node name="Player" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 7
+gravity_scale = 0.1
+script = ExtResource("1_t0b4n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_baa2g")
+
+[node name="BoosterFlame" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 10)
+sprite_frames = SubResource("SpriteFrames_cx4kb")
+animation = &"boost"
+autoplay = "boost"
+frame_progress = 0.152871
+speed_scale = 2.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_od8hv")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_0r2fl")

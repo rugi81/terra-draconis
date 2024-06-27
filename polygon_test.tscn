@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://0c6yop1fk88"]
+
+[ext_resource type="Script" path="res://polygon_test.cs" id="1_34s7y"]
+[ext_resource type="PackedScene" uid="uid://cevsj5v5pxtkm" path="res://debris.tscn" id="2_6wa6x"]
+[ext_resource type="PackedScene" uid="uid://dt1iocjaiixmw" path="res://terrain.tscn" id="3_6os4y"]
+[ext_resource type="PackedScene" uid="uid://c0nu6b43ce1wy" path="res://player.tscn" id="3_w53lo"]
+
+[node name="PolygonTest" type="Node2D"]
+script = ExtResource("1_34s7y")
+
+[node name="Poly1" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(1326, 35, 1327, 67, 1317, 94, 1306, 124, 1294, 143, 1274, 164, 1247, 152, 0, 0, 0, 0, 0, 0)
+
+[node name="Poly2" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(1263, 138, 1280, 129, 1293, 145, 1274, 155, 1263, 146, 1263, 138)
+
+[node name="Debris" parent="." instance=ExtResource("2_6wa6x")]
+position = Vector2(-97, 105)
+collision_layer = 3
+
+[node name="Terrain" parent="." instance=ExtResource("3_6os4y")]
+position = Vector2(23, -16)
+
+[node name="Player" parent="." instance=ExtResource("3_w53lo")]
+
+[node name="TestRigid" type="RigidBody2D" parent="."]
+position = Vector2(224, 220)
+rotation = 0.820305
+collision_layer = 7
+collision_mask = 7
+
+[node name="Poly2" type="Polygon2D" parent="TestRigid"]
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 100, 0, 100)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TestRigid"]
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 100, 0, 100)
+
+[node name="Timer" type="Timer" parent="TestRigid"]
+wait_time = 0.681
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(224, 220)
+rotation = 0.820305
+
+[connection signal="timeout" from="TestRigid/Timer" to="." method="_on_timer_timeout"]

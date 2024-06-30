@@ -12,6 +12,7 @@ public partial class Terrain : Godot.Node2D
 	private Debris[] debris;
 	private MapGenerator parentNode;
 	private float segmentDepth = 300.0f;
+	private Vector2[] originalPoly;
 	
 	[Signal]
 	public delegate void DeformTerrainEventHandler();	
@@ -34,6 +35,9 @@ public partial class Terrain : Godot.Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if ( Input.IsActionPressed("test_feature") ){
+			SimplifyPolygon( poly.Polygon );
+		}
 	}
 		
 	public void BuildTerrain( Vector2 start_position, string terrain_type = "flat" ){
@@ -131,23 +135,15 @@ public partial class Terrain : Godot.Node2D
 		// add underground
 		p2Arr = new Vector2[polyArr.Length+2];
 		for ( int j=0; j<polyArr.Length; j++ ){
-			p2Arr[j] = polyArr[j];
+			p2Arr[j] = new Vector2( MathF.Round(polyArr[j].X, 2), MathF.Round(polyArr[j].Y, 2) );
 		}
 		p2Arr[p2Arr.Length-1] = new Vector2 (start_position.X, segmentDepth);
-		p2Arr[p2Arr.Length-2] = new Vector2 (p2Arr[p2Arr.Length-3].X, segmentDepth);
-		
-		//GD.Print( (p2Arr.Length-2) + "-- " + p2Arr[p2Arr.Length-2] );
-		//GD.Print( (p2Arr.Length-1) + "-- " + p2Arr[p2Arr.Length-1] );
+		p2Arr[p2Arr.Length-2] = new Vector2 (p2Arr[p2Arr.Length-3].X, segmentDepth);		
 		polyArr = p2Arr;
 
+		//GD.Print(polyArr);
+		originalPoly = polyArr;
 
-		//GD.Print("Ground...");
-		//GD.Print( polyArr.ToString() );
-		//GD.Print( polyArr.Length );
-		for  ( int i = 0; i < polyArr.Length; i++ ){
-			//GD.Print( i + "-- " + polyArr[i] );			
-		}
-		
 		//GD.Print("lastX:"+width+", lastY:"+lastY);
 		return polyArr;
 	}
@@ -196,9 +192,19 @@ public partial class Terrain : Godot.Node2D
 		CallDeferred("SetCPolygon", poly.Polygon);
 	}
 	
+	private Boolean comparePoint( Vector2 point ){
+		for ( var i=0; i < originalPoly.Length; i++ ){
+			if ( originalPoly[i].DistanceTo(point) < 2 ){
+				GD.Print( originalPoly[i] + " " + point );
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private Vector2[] SimplifyPolygon ( Vector2[] inPoly ){		
 		Vector2[] newPoly = inPoly;
-		float minDistance = 8;
+		float minDistance = 7;
 		Boolean cPointSet = false;
 		Vector2 cPoint = Vector2.Zero;
 		int points = 0;
@@ -213,19 +219,17 @@ public partial class Terrain : Godot.Node2D
 		String inPolyString = "";
 		
 		for ( var i=0; i<inPoly.Length; i++ ){
-	//		GD.Print("inPoly["+i+"]: "+inPoly[i]);
+
 			inPolyString += inPoly[i];
 			if ( !cPointSet ){
-				//GD.Print("Set CPOINT");
 				cPoint = inPoly[i];
 				cPointSet = true;
 				points++;
 				pointDist = 1;
 				
-				//GD.Print( "cPoint: "+cPoint );
 			}else{
 				float d = inPoly[i].DistanceTo(cPoint);
-
+				
 				estPoint += inPoly[i];			
 				if ( d > minDistance || inPoly[i].Y == segmentDepth ){
 					points++;

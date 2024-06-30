@@ -47,7 +47,7 @@ public partial class main : Node2D
 		// Movement based off player position;
 		cam2D.Transform = new Transform2D( cam2D.Transform.Rotation, new Vector2( pl.Position.X, pl.Position.Y )); //+ (camMotion.Y*4)) );
 		
-		float boundaryY = 1130 - GetViewport().GetVisibleRect().Size.Y;//480;
+		float boundaryY = 810 - GetViewport().GetVisibleRect().Size.Y/2;//480;
 		//GD.Print(GetViewport().GetVisibleRect().Size.Y);
 		float boundaryOffset = GetViewport().GetVisibleRect().Size.Y/2 - (GetViewport().GetVisibleRect().Size.Y/2/zoomAmt);
 		boundaryY += boundaryOffset;		

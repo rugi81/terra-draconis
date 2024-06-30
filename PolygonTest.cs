@@ -16,6 +16,7 @@ public partial class PolygonTest : Node2D
 	{
 		if ( Input.IsActionPressed("input_action") ){
 			GD.Print( Geometry2D.ClipPolygons(poly1.Polygon, poly2.Polygon) );
+			GD.Print("test");
 		}
 	}
 }

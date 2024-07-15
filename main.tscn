@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bu22emgrfgnbi"]
+[gd_scene load_steps=9 format=3 uid="uid://bu22emgrfgnbi"]
 
 [ext_resource type="Script" path="res://main.cs" id="1_2hyui"]
 [ext_resource type="PackedScene" uid="uid://cj0sr3dxl1455" path="res://bullet.tscn" id="2_e15n2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bdpfellmwtr6s" path="res://assets/Sky_Day_BlueSky_Nothing_Cam_1_Back-Z.png" id="4_bg1eb"]
 [ext_resource type="Texture2D" uid="uid://km8xb0vfu4ce" path="res://assets/Clouds.png" id="6_h8efi"]
 [ext_resource type="Texture2D" uid="uid://ckhts35qiqwnc" path="res://assets/Arrow.png" id="7_2nyx4"]
+[ext_resource type="Texture2D" uid="uid://c5sd3hntbuv4m" path="res://assets/2d_lights_and_shadows_neutral_point_light.webp" id="8_6nuax"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_2hyui")
@@ -16,6 +17,18 @@ Bullets = ExtResource("2_e15n2")
 [node name="View" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="View"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("7_2nyx4")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D"]
+visible = false
+energy = 1.9
+range_item_cull_mask = 255
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.87451)
+texture = ExtResource("8_6nuax")
+texture_scale = 6.6
 
 [node name="Player" parent="." instance=ExtResource("3_gy2rp")]
 
@@ -39,8 +52,10 @@ motion_mirroring = Vector2(2000, 0)
 texture_repeat = 2
 texture = ExtResource("6_h8efi")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 300)
-texture = ExtResource("7_2nyx4")
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
+position = Vector2(260, 19)
+energy = 0.43
+shadow_enabled = true
 
 [connection signal="CreateProjectile" from="Player" to="." method="_on_player_create_projectile"]

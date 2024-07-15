@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cevsj5v5pxtkm"]
+[gd_scene load_steps=5 format=3 uid="uid://cevsj5v5pxtkm"]
 
 [ext_resource type="Script" path="res://Debris.cs" id="1_cngeg"]
-[ext_resource type="Texture2D" uid="uid://crdxndt1mtl12" path="res://assets/Ground.png" id="2_a2bil"]
+[ext_resource type="Texture2D" uid="uid://dnpms5m3h1jb" path="res://assets/Dirt_01.png" id="2_0pnau"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uav56"]
 rough = true
 absorbent = true
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1vewx"]
 
 [node name="RigidBody2D" type="RigidBody2D"]
 disable_mode = 1
@@ -20,9 +22,13 @@ script = ExtResource("1_cngeg")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 texture_repeat = 2
-texture = ExtResource("2_a2bil")
+texture = ExtResource("2_0pnau")
 polygon = PackedVector2Array(128, 109, 203, 88, 264, 146, 215, 186, 176, 151, 134, 164)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[node name="Shadow" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource("OccluderPolygon2D_1vewx")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

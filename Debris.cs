@@ -7,6 +7,8 @@ public partial class Debris : RigidBody2D
 	private CollisionPolygon2D cpoly;
 	private Boolean moveBody = false;
 	private Vector2 moveTarget;
+	private LightOccluder2D shadows;
+	
 	
 	[Export]
 	public PackedScene PolyScene {get;set;}
@@ -20,6 +22,7 @@ public partial class Debris : RigidBody2D
 		//GD.Print("Debris made");
 		poly = GetNode<Polygon2D>("Polygon2D");
 		cpoly = GetNode<CollisionPolygon2D>("CollisionPolygon2D");
+		shadows = GetNode<LightOccluder2D>("Shadow");
 	}
 	
 	
@@ -52,6 +55,7 @@ public partial class Debris : RigidBody2D
 	
 	private void setCPoly( Vector2[] inPoly ){
 		cpoly.Polygon = inPoly;
+		shadows.Occluder.Polygon = inPoly;
 	}
 	
 	public void DoDeformDebris( Vector2[] inPoly, Vector2 polyPosition ){

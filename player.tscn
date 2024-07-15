@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0nu6b43ce1wy"]
+[gd_scene load_steps=10 format=3 uid="uid://c0nu6b43ce1wy"]
 
 [ext_resource type="Texture2D" uid="uid://37lm27va1xfx" path="res://assets/AlienSpaceship.png" id="1_od8hv"]
 [ext_resource type="Script" path="res://player.cs" id="1_t0b4n"]
 [ext_resource type="Texture2D" uid="uid://4ofmpitiy3ol" path="res://assets/Fireball.png" id="2_0lduw"]
+[ext_resource type="Texture2D" uid="uid://c5sd3hntbuv4m" path="res://assets/2d_lights_and_shadows_neutral_point_light.webp" id="3_vqwed"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_baa2g"]
 radius = 7.0
@@ -50,6 +51,14 @@ animation = &"boost"
 autoplay = "boost"
 frame_progress = 0.152871
 speed_scale = 2.0
+
+[node name="PointLight2D" type="PointLight2D" parent="BoosterFlame"]
+position = Vector2(0, 2)
+color = Color(0.894118, 0.705882, 0, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("3_vqwed")
+texture_scale = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_od8hv")
